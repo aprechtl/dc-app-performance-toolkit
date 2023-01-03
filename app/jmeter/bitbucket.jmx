@@ -186,7 +186,7 @@ import org.apache.commons.io.FileUtils;
  	String privateSshKeyLocation = (gitTmpWorkspace + &quot;/bitbucket_ssh/id_rsa&quot;).replace(&quot;\\&quot;, &quot;/&quot;);
  	props.put(&quot;PRIVATE_SSH_KEY_LOCATION&quot;, privateSshKeyLocation);
      log.info(&quot;SSH keys are stored in &quot; + privateSshKeyLocation);
-     props.put(&quot;GIT_SSH_COMMAND&quot;, &quot;ssh -i &quot; + privateSshKeyLocation + &quot; -o \&quot;StrictHostKeyChecking=no\&quot;&quot;);     
+     props.put(&quot;GIT_SSH_COMMAND&quot;, &quot;ssh -i &quot; + privateSshKeyLocation + &quot; -o \&quot;StrictHostKeyChecking=no\&quot;&quot;);
 } catch (Exception e) {
 	log.error(&quot;Error while copying ssh keys&quot;, e);
 	ctx.getEngine().askThreadsToStop();
@@ -237,7 +237,7 @@ String datasetsDir =  Paths.get(baseDir)
 					.toAbsolutePath()
 					.toString()
 					.replace(&quot;\\&quot;, &quot;/&quot;);
-					
+
 props.put(&quot;DATASETS_DIR&quot;, datasetsDir);</stringProp>
           </JSR223PreProcessor>
           <hashTree/>
@@ -300,7 +300,7 @@ log.info(&quot;GIT_LOG_DIR: &quot; + gitLogDir);
 if(!prev.isSuccessful()){
 	log.error(&quot;Error occured in Thread name::&quot; + prev.getThreadName() + &quot;::Sampler name::&quot; + prev.getSampleLabel() + &quot;::&quot; + prev.getResponseMessage() + &quot;::&quot; + prev.getResponseDataAsString())
 	ctx.getEngine().askThreadsToStop();
-}	
+}
 else{
 	prev.setIgnore()
 }
@@ -401,7 +401,7 @@ vars.put(&quot;SERVER_SSH_KEYS&quot;, result.join(&quot;::&quot;));
             <stringProp name="parameters"></stringProp>
             <stringProp name="filename"></stringProp>
             <stringProp name="cacheKey">true</stringProp>
-            <stringProp name="script">import java.io.File; 
+            <stringProp name="script">import java.io.File;
 vars.put(&quot;USER_SSH_KEY&quot;, new File(&apos;${__P(PRIVATE_SSH_KEY_LOCATION)}.pub&apos;).getText(&apos;UTF-8&apos;).trim());
 </stringProp>
           </JSR223Sampler>
@@ -503,7 +503,7 @@ vars.put(&quot;USER_SSH_KEY&quot;, new File(&apos;${__P(PRIVATE_SSH_KEY_LOCATION
 if(!prev.isSuccessful()){
 	log.error(&quot;Error occured in Thread name::&quot; + prev.getThreadName() + &quot;::Sampler name::&quot; + prev.getSampleLabel() + &quot;::&quot; + prev.getResponseMessage() + &quot;::&quot; + prev.getResponseDataAsString())
 	ctx.getEngine().askThreadsToStop();
-}	
+}
 else{
 	prev.setIgnore()
 }
@@ -576,7 +576,7 @@ def gitProtocolSshPercentage = Integer.valueOf(&quot;${GIT_PROTOCOL_SSH_PERCENTA
 def randomNum = java.util.concurrent.ThreadLocalRandom.current().nextInt(0, 100)
 if (randomNum &lt;= gitProtocolSshPercentage) {
 	vars.put(&quot;GIT_PROTOCOL&quot;, &quot;ssh&quot;)
-	vars.put(&quot;REPO_URL&quot;, &quot;ssh://git@${application.ssh_hostname}:${application.ssh_port}/&quot; + projectKey + &quot;/&quot; + repoSlug + &quot;.git&quot;) 
+	vars.put(&quot;REPO_URL&quot;, &quot;ssh://git@${application.ssh_hostname}:${application.ssh_port}/&quot; + projectKey + &quot;/&quot; + repoSlug + &quot;.git&quot;)
 } else {
 	vars.put(&quot;GIT_PROTOCOL&quot;, &quot;http&quot;)
 	vars.put(&quot;REPO_URL&quot;, &quot;${application.protocol}://&quot; + username + &quot;:&quot; + password + &quot;@${application.hostname}:${application.port}${application.postfix}/scm/&quot; + projectKey + &quot;/&quot; + repoSlug + &quot;.git&quot;)
@@ -691,13 +691,13 @@ import java.util.UUID;
  	                              .toAbsolutePath()
  	                              .toString();
      log.info(&quot;Shallow copies folder: [&quot; + shallowCopiesDir +&quot;] successfully created.&quot;);
-     
+
 	File srcDir = new File(vars.get(&quot;REPO_FOLDER&quot;) + &quot;/.git&quot;);
 	String repoShallowCopyDir = shallowCopiesDir + &quot;/&quot; + vars.get(&quot;REPO_SLUG&quot;) + &quot;-&quot; + UUID.randomUUID();
 	File trgDir = new File (repoShallowCopyDir + &quot;/.git&quot;);
 	FileUtils.copyDirectory(srcDir, trgDir);
 	vars.put(&quot;REPO_SHALLOW_COPY_DIR&quot;, repoShallowCopyDir);
-	
+
 } catch (Exception e) {
 	log.error(&quot;Error while creating temporary workspace for pull&quot;, e);
 	ctx.getEngine().askThreadsToStop();
